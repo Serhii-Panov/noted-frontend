@@ -8,9 +8,8 @@ interface NoteCardProps {
 }
 
 export const NoteCard: React.FC<NoteCardProps> = ({ note, onRefresh }) => {
-  const id = note.id;
+  const id = note.id || (note as { _id?: string })._id;
 
-  // Переключение статуса (выполнено / не выполнено)
   const handleToggleCompleted = async () => {
     if (!id) return;
     try {
@@ -21,7 +20,6 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onRefresh }) => {
     }
   };
 
-  // Изменение приоритета от 1 до 10
   const handlePriorityChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (!id) return;
     try {
@@ -32,9 +30,12 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onRefresh }) => {
     }
   };
 
-  // Удаление заметки
   const handleDelete = async () => {
-    if (!id) return;
+    if (!id){
+      console.log(id);
+      console.error('Note ID is undefined. Cannot delete note.');
+      return;
+    }
     try {
       await deleteNote(id);
       onRefresh?.();
