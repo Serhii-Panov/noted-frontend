@@ -2,6 +2,7 @@ import React from 'react';
 import { Note } from '@/types/note';
 import { NoteCard } from '../NoteCard/NoteCard';
 
+
 interface NoteListProps {
   notes: Note[];
   onRefresh?: () => void;
@@ -22,7 +23,7 @@ export const NoteList: React.FC<NoteListProps> = ({ notes, onRefresh }) => {
         <NoteCard
           key={note.id || (note as { _id?: string })._id || `note-${index}`}
           note={note}
-          onRefresh={onRefresh}
+          onRefresh={() => {onRefresh?.()}}
         />
       ))}
     </div>

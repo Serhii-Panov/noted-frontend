@@ -9,12 +9,17 @@ import { useDebouncedCallback } from "use-debounce";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Link from "next/link";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   params: "Work" | "Personal" | "Meeting" | "Shopping" | "Todo" | undefined;
 };
 
 const NotesClient = ({ params }: Props) => {
+  const queryClient = useQueryClient();
+  const handleRefresh = () => {
+    queryClient.invalidateQueries({ queryKey: ["notes"], exact: false });
+  };
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const currentQuery = {
@@ -57,7 +62,9 @@ const NotesClient = ({ params }: Props) => {
           </Link>
         }
       </header>
-      {data?.notes && data.notes.length > 0 && <NoteList notes={data.notes} />}
+      {data?.notes && data.notes.length > 0 && (
+        <NoteList notes={data.notes} onRefresh={handleRefresh} />
+      )}
       {data?.notes && data.notes.length === 0 && (
         <p>No notes found. Try creating one!</p>
       )}
