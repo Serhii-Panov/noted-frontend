@@ -17,7 +17,7 @@ type Props = {
 
 const NotesClient = ({ params }: Props) => {
   const queryClient = useQueryClient();
-  const handleRefresh = () => {
+  const handleChange = () => {
     queryClient.invalidateQueries({ queryKey: ["notes"], exact: false });
   };
   const [currentPage, setCurrentPage] = useState(1);
@@ -63,7 +63,7 @@ const NotesClient = ({ params }: Props) => {
         }
       </header>
       {data?.notes && data.notes.length > 0 && (
-        <NoteList notes={data.notes} onRefresh={handleRefresh} />
+        <NoteList notes={data.notes} onRefresh={handleChange} />
       )}
       {data?.notes && data.notes.length === 0 && (
         <p>No notes found. Try creating one!</p>

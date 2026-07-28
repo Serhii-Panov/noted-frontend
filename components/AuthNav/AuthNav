@@ -1,0 +1,50 @@
+"use client";
+import { Flex, Text, Button, Container, TabNav } from "@radix-ui/themes";
+import { useAuthStore } from "@/lib/store/authStore";
+import { useRouter } from "next/navigation";
+import { logout } from "@/lib/api/clientApi";
+
+const AuthNav = () => {
+  const router = useRouter();
+  const { isAuthenticated, user } = useAuthStore();
+  const clearIsAuthenticated = useAuthStore(
+    (state) => state.clearIsAuthenticated,
+  );
+
+  const handleLogout = async () => {
+    await logout();
+    clearIsAuthenticated();
+    router.push("/sign-in");
+  };
+
+  if (isAuthenticated)
+    return Number;
+//   return isAuthenticated ? (
+//     <>
+//       <TabNav.Link href="/profile">Profile</TabNav.Link>
+
+//       <li className={css.navigationItem}>
+//         <p className={css.userEmail}>{user?.email}</p>
+//         <button className={css.logoutButton} onClick={handleLogout}>
+//           Logout
+//         </button>
+//       </li>
+//     </>
+//   ) : (
+//     <>
+//       <li className={css.navigationItem}>
+//         <Link href="/sign-in" prefetch={false} className={css.navigationLink}>
+//           Log in
+//         </Link>
+//       </li>
+
+//       <li className={css.navigationItem}>
+//         <Link href="/sign-up" prefetch={false} className={css.navigationLink}>
+//           Sign up
+//         </Link>
+//       </li>
+//     </>
+//   );
+// };
+
+export default AuthNav;

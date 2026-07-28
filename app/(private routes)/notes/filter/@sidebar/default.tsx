@@ -1,21 +1,21 @@
 import Link from "next/link";
-import css from "./NotesSidebar.module.css";
+
 
 const NotesSidebar = () => {
     const tagList = ["Work", "Personal", "Meeting", "Shopping", "Todo"];
   return (
     <div>
-      <ul className={css.menuList}>
-        <li className={css.menuItem}>
-          <Link href={`/notes/filter/all`} className={css.menuLink}>All notes
+      <ul className="flex-col" >
+        <li className="p-2">
+          <Link href={`/notes/filter/all`} className=" hover:bg-blue-400">All notes
           </Link>
         </li>   
         {tagList.map((tag) => {
             return (
-                <li key={tag} className={css.menuItem}>
+                <li key={tag} className="p-2 hover:bg-blue-400">
                   <Link
                     href={`/notes/filter/${tag}`}
-                    className={css.menuLink}
+                    className=""
                   >
                     {tag}
                   </Link>
