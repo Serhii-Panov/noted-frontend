@@ -1,6 +1,5 @@
 'use client'
 import Link from 'next/link'
-import css from './AuthNavigation.module.css' 
 import { useAuthStore } from "@/lib/store/authStore";
 import { useRouter } from "next/navigation";
 import { logout } from "@/lib/api/clientApi";
@@ -22,29 +21,29 @@ import { logout } from "@/lib/api/clientApi";
 
   return isAuthenticated ? (
     <>
-      <li className={css.navigationItem}>
-        <Link href="/profile" prefetch={false} className={css.navigationLink}>
+      <li className="">
+        <Link href="/profile" prefetch={false} className="">
           Profile
         </Link>
       </li>
 
-      <li className={css.navigationItem}>
-        <p className={css.userEmail}>{user?.email}</p>
-        <button className={css.logoutButton} onClick={handleLogout}>
+      <li className="flex gap-4 items-center">
+        <p className="text-white">{user?.email}</p>
+        <button className=" text-white py-2 px-4 rounded hover:bg-white hover:text-black" onClick={handleLogout}>
           Logout
         </button>
       </li>
     </>
   ) : (
     <>
-      <li className={css.navigationItem}>
-        <Link href="/sign-in" prefetch={false} className={css.navigationLink}>
+      <li className="flex gap-4 items-center">
+        <Link href="/sign-in" prefetch={false} className="">
           Log in
         </Link>
       </li>
 
-      <li className={css.navigationItem}>
-        <Link href="/sign-up" prefetch={false} className={css.navigationLink}>
+      <li className="flex gap-4 items-center">
+        <Link href="/sign-up" prefetch={false} className="">
           Sign up
         </Link>
       </li>

@@ -1,14 +1,13 @@
-import css from "./Header.module.css";
 import Link from "next/link";
 import AuthNav from "../AuthNavigation/AuthNavigation";
 export default function Header() {
   return (
-    <header className={css.header}>
-      <Link href="/" aria-label="Home">
+    <header className="flex gap-4 place-content-between content-center items-center py-4 px-8 bg-[#333]">
+      <Link className="text-[24px] font-bold text-white" href="/" aria-label="Home">
         NoteHub
       </Link>
       <nav aria-label="Main Navigation">
-        <ul className={css.navigation}>
+        <ul className="flex gap-4 text-[16px] text-white content-center items-center font-bold">
           <li>
             <Link href="/">Home</Link>
           </li>
