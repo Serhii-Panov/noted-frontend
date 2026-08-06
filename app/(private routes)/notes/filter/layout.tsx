@@ -1,4 +1,3 @@
-// app/notes/filter/layout.tsx
 
 type Props = {
   children: React.ReactNode;
@@ -7,9 +6,9 @@ type Props = {
 
 const NotesLayout = ({ children, sidebar }: Props) => {
   return (
-    <section style={{ display: "flex", gap: "20px" }}>
+    <section className="flex gap-5 justify-between items-start w-full px-8 h-[80vh]">
       <aside>{sidebar}</aside>
-      <div style={{width: "100%"}}>{children}</div>
+      <div className="w-full">{children}</div>
     </section>
   );
 };
