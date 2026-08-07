@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { updateMe, getMe } from "@/lib/api/clientApi";
 import { useAuthStore } from "@/lib/store/authStore";
 import Image from "next/image";
-import css from "./Edit.module.css";
 
 const EditProfile = () => {
   const router = useRouter();
@@ -26,7 +25,7 @@ const EditProfile = () => {
   }, []);
 
   const handleSaveUser = async (formData: FormData) => {
-    const username = formData.get('username') as string;
+    const username = formData.get("username") as string;
     try {
       const updatedUser = await updateMe({
         username,
@@ -43,49 +42,52 @@ const EditProfile = () => {
   };
 
   return (
-    <main className={css.mainContent}>
-      <div className={css.profileCard}>
-        <h1 className={css.formTitle}>Edit Profile</h1>
+    <main className="flex-1">
+      <div className="max-w-3xl mx-auto p-6">
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h1 className="text-xl font-bold text-gray-800">Edit Profile</h1>
 
-       
           <Image
             src={avatar}
             alt="User Avatar"
             width={120}
             height={120}
-            className={css.avatar}
+            className="rounded-full"
             priority
           />
-        
 
-        <form className={css.profileInfo} action={handleSaveUser}>
-          <div className={css.usernameWrapper}>
-            <label htmlFor="username">Username:</label>
-            <input
-              id="username"
-              type="text"
-              className={css.input}
-              value={username}
-              onChange={(e) => setUserName(e.target.value)}
-              required
-            />
-          </div>
+          <form className="space-y-4" action={handleSaveUser}>
+            <div className="flex flex-col">
+              <label htmlFor="username">Username:</label>
+              <input
+                id="username"
+                type="text"
+                className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
+                required
+              />
+            </div>
 
-          <p className={css.userEmail}>Email: {email}</p>
+            <p className="text-lg font-semibold">Email: {email}</p>
 
-          <div className={css.actions}>
-            <button type="submit" className={css.saveButton}>
-              Save
-            </button>
-            <button
-              type="button"
-              className={css.cancelButton}
-              onClick={handleCancel}
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                className="px-4 py-2 bg-[#0d6efd] text-white border-none rounded-sm hover:bg-[#0b5ed7] transition-colors duration-200 ease-in-out cursor-pointer"
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                className="px-4 py-2 bg-[#6c757d] text-white border-none rounded-sm hover:bg-[#5a6268] transition-colors duration-200 ease-in-out cursor-pointer"
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </main>
   );

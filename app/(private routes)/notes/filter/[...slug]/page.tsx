@@ -1,5 +1,4 @@
 import { cookies } from "next/headers";
-import css from "./page.module.css";
 import { fetchNotes } from "@/lib/api/clientApi";
 import {
   QueryClient,
@@ -65,7 +64,7 @@ const Notes = async ({ params }: Props) => {
   }
 
   return (
-    <div className={css.container}>
+    <div className="w-[90%] max-w-[1280px] mx-auto p-0">
       <HydrationBoundary state={dehydrate(queryClient)}>
         <NotesClient params={tag} />
       </HydrationBoundary>

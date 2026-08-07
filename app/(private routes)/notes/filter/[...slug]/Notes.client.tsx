@@ -2,7 +2,6 @@
 import NoteList from "@/components/NoteList/NoteList";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api/clientApi";
-import css from "./Notes.client.module.css";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useDebouncedCallback } from "use-debounce";
@@ -26,7 +25,7 @@ const NotesClient = ({ params }: Props) => {
     search: searchQuery,
     tag: params,
     page: currentPage,
-    perPage: 10,
+    perPage: 9,
   };
 
   const updateSearchQuery = useDebouncedCallback(
@@ -44,8 +43,8 @@ const NotesClient = ({ params }: Props) => {
   });
 
   return (
-    <div className={css.app}>
-      <header className={css.toolbar}>
+    <div className="w-[90%] max-w-[1280px] mx-auto p-0">
+      <header className="mb-4 flex justify-between items-center p-4 border-b border-[#dee2e6] bg-[#f8f9fa]">
         <SearchBox onSearch={updateSearchQuery} searchQuery={searchQuery} />
         {data && data.totalPages > 1 && (
           <Pagination
@@ -57,7 +56,7 @@ const NotesClient = ({ params }: Props) => {
           />
         )}
         {
-          <Link href="/notes/action/create" className={css.button}>
+          <Link href="/notes/action/create" className="px-1.5 py-2 text-base text-white bg-[#0d6efd] border-none rounded-sm hover:bg-[#0b5ed7] transition-colors duration-200 ease-in-out cursor-pointer">
             Create note +
           </Link>
         }

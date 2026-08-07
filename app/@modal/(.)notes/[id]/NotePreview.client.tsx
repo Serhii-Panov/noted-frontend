@@ -1,5 +1,4 @@
 "use client";
-import css from "./NoteDetails.module.css";
 import { fetchNoteById } from "@/lib/api/clientApi";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
@@ -25,13 +24,13 @@ const NotePreviewClient = () => {
       {isError && <p>Something went wrong.</p>}
       {data && (
         <Modal onClose={closeModal}>
-          <div className={css.container}>
-            <div className={css.item}>
-              <div className={css.header}>
-                <h2>{data?.title}</h2>
+          <div className="max-w-3xl mx-auto p-6">
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold text-gray-800">{data?.title}</h2>
               </div>
-              <p className={css.content}>{data?.content}</p>
-              <p className={css.date}>{data?.createdAt}</p>
+              <p className="text-gray-600">{data?.content}</p>
+              <p className="text-sm text-gray-500">{data?.createdAt}</p>
             </div>
           </div>
         </Modal>

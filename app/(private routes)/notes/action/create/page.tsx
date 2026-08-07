@@ -1,4 +1,3 @@
-import css from "./page.module.css"
 import NoteForm from "@/components/NoteForm/NoteForm";
 import { Metadata } from "next";
 
@@ -25,9 +24,9 @@ export const metadata: Metadata = {
 
 const CreateNote = () => {
   return (
-    <main className={css.main}>
-      <div className={css.container}>
-        <h1 className={css.title}>Create note</h1>
+    <main className="flex-1">
+      <div className="w-[90%] max-w-[1280px] mx-auto p-4 flex flex-col gap-6">
+        <h1 className="text-4xl font-bold text-center text-[#1a1a1a]">Create note</h1>
         <NoteForm />
       </div>
     </main>

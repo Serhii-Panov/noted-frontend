@@ -167,6 +167,7 @@ export const getMe = async () => {
     id: "demo-id",
     username: "Demo User",
     email: "demo@example.com",
+    avatar: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
   };
   // const { data } = await nextProxyServer.get<User>("/users/me");
   // return data;
