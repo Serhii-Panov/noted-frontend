@@ -64,7 +64,7 @@ const Notes = async ({ params }: Props) => {
   }
 
   return (
-    <div className="w-[90%] max-w-[1280px] mx-auto p-0">
+    <div className="">
       <HydrationBoundary state={dehydrate(queryClient)}>
         <NotesClient params={tag} />
       </HydrationBoundary>

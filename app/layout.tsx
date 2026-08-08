@@ -33,11 +33,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Theme>
+        <Theme className="flex flex-col min-h-full">
           <TanStackProvider>
             <AuthProvider>
               <Header />
-              {children}
+              <main className="grow">{children}</main>
               <Footer />
             </AuthProvider>
           </TanStackProvider>

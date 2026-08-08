@@ -6,7 +6,7 @@ type Props = {
 
 const NotesLayout = ({ children, sidebar }: Props) => {
   return (
-    <section className="flex gap-5 justify-between items-start w-full px-8 h-[80vh]">
+    <section className="flex justify-between items-start w-full px-8 h-full">
       <aside>{sidebar}</aside>
       <div className="w-full">{children}</div>
     </section>
