@@ -6,6 +6,7 @@ import { logout } from "@/lib/api/clientApi";
 
 
 
+
  const AuthNav = () => {
  const router = useRouter();
   const { isAuthenticated, user } = useAuthStore();
@@ -16,6 +17,7 @@ import { logout } from "@/lib/api/clientApi";
   const handleLogout = async () => {
     await logout();
     clearIsAuthenticated();
+    
     router.push("/sign-in");
   };
 
