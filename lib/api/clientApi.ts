@@ -3,6 +3,7 @@ import type { User } from "../../types/user";
 import nextProxyServer from "./api";
 import type { ApiError } from "../../../09-auth/app/api/api";
 
+
 export type TaskStatus = "all" | "done" | "undone";
 export type SortOption =
   | "created"
@@ -150,27 +151,18 @@ type CheckSessionRequest = {
 };
 
 export const checkSession = async (): Promise<boolean> => {
-  return true;
+  try {
+    const res = await nextProxyServer.get<CheckSessionRequest>("/auth/session");
+    return res.data.success;
+  } catch (error) {
+    return false;
+  }
 };
 
-// export const checkSession = async (): Promise<boolean> => {
-//   try {
-//     const res = await nextProxyServer.get<CheckSessionRequest>("/auth/session");
-//     return res.data.success;
-//   } catch (error) {
-//     return false;
-//   }
-// };
-
 export const getMe = async () => {
-  return {
-    id: "demo-id",
-    username: "Demo User",
-    email: "demo@example.com",
-    avatar: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
-  };
-  // const { data } = await nextProxyServer.get<User>("/users/me");
-  // return data;
+  const { data } = await nextProxyServer.get<User>("/users/me");
+  console.log("getMe data:", data);
+  return data;
 };
 
 export const logout = async (): Promise<void> => {
