@@ -30,12 +30,6 @@ export const metadata: Metadata = {
 
 
 const Profile = async () => {
-  return (
-  <div>
-    <p>Page in development</p>
-    <Link href="/">Go to Home</Link>
-  </div>
-)
   const user = await getServerMe();
 
     
