@@ -4,10 +4,9 @@ const nextConfig: NextConfig = {
   /* config options here */
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'ac.goit.global',}
-      ]
+      { protocol: "https", hostname: "ac.goit.global" },
+      { protocol: "https", hostname: "res.cloudinary.com" },
+    ],
   },
   reactCompiler: true,
 };

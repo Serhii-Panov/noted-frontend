@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { updateMe } from "@/lib/api/clientApi";
+import { updateMe, updateAvatar } from "@/lib/api/clientApi";
 import { useAuthStore } from "@/lib/store/authStore";
-import Image from "next/image";
+import AvatarPicker from "@/components/AvatarPicker/AvatarPicker";
 
 const EditProfile = () => {
   const router = useRouter();
@@ -12,56 +12,60 @@ const EditProfile = () => {
   const setUser = useAuthStore((state) => state.setUser);
 
   const [username, setUserName] = useState(user?.username ?? "");
-  const [email, setEmail] = useState(user?.email ?? "");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  useEffect(() => {
-    if (user) {
-      setUserName(user.username ?? "");
-      setEmail(user.email ?? "");
-    }
-  }, [user]);
+  if (!user) {
+    return (
+      <main className="flex-1 p-6 max-w-3xl mx-auto">
+        <p className="text-gray-500">Loading user profile...</p>
+      </main>
+    );
+  }
 
-  const handleSaveUser = async (formData: FormData) => {
-    const updatedUsername = (formData.get("username") as string) || username;
-    
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     try {
-      const updatedUser = await updateMe({
-        username: updatedUsername,
-      });
-      setUser(updatedUser);
+      let updatedUser = user;
+
+      // 1. Загружаем аватарку, если выбран файл
+      if (selectedFile) {
+        updatedUser = await updateAvatar(selectedFile);
+      }
+
+      // 2. Обновляем имя, если оно изменилось
+      if (username !== user.username) {
+        updatedUser = await updateMe({ username });
+      }
+
+      if (updatedUser) {
+        setUser(updatedUser);
+      }
       router.push("/profile");
     } catch (error) {
-      console.error("Oops, some error:", error);
+      console.error("Failed to update profile:", error);
     }
-  };
-
-  const handleCancel = () => {
-    router.back();
   };
 
   return (
     <main className="flex-1">
       <div className="max-w-3xl mx-auto p-6">
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h1 className="text-xl font-bold text-gray-800 mb-4">Edit Profile</h1>
+          <h1 className="text-xl font-bold text-gray-800 mb-6">Edit Profile</h1>
 
-          <Image
-            src="https://ac.goit.global/fullstack/react/notehub-og-meta.jpg"
-            alt="User Avatar"
-            width={120}
-            height={120}
-            className="rounded-full mb-6"
-            priority
-          />
+          <form key={user.id} className="space-y-6" onSubmit={handleSubmit}>
+            <AvatarPicker
+              profilePhotoUrl={user.avatar}
+              onFileSelect={(file) => setSelectedFile(file)}
+            />
 
-          <form className="space-y-4" action={handleSaveUser}>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 max-w-md">
               <label htmlFor="username" className="text-sm font-medium text-gray-700">
                 Username:
               </label>
               <input
                 id="username"
-                name="username" 
+                name="username"
                 type="text"
                 className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={username}
@@ -70,19 +74,21 @@ const EditProfile = () => {
               />
             </div>
 
-            <p className="text-lg font-semibold text-gray-700">Email: {email}</p>
+            <p className="text-sm text-gray-600">
+              Email: <span className="font-semibold text-gray-800">{user.email}</span>
+            </p>
 
             <div className="flex gap-3 pt-2">
               <button
                 type="submit"
-                className="px-4 py-2 bg-[#0d6efd] text-white border-none rounded-sm hover:bg-[#0b5ed7] transition-colors duration-200 ease-in-out cursor-pointer"
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 cursor-pointer text-sm font-medium"
               >
                 Save
               </button>
               <button
                 type="button"
-                className="px-4 py-2 bg-[#6c757d] text-white border-none rounded-sm hover:bg-[#5a6268] transition-colors duration-200 ease-in-out cursor-pointer"
-                onClick={handleCancel}
+                className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors duration-200 cursor-pointer text-sm font-medium"
+                onClick={() => router.back()}
               >
                 Cancel
               </button>

@@ -3,7 +3,6 @@ import type { User } from "../../types/user";
 import nextProxyServer from "./api";
 import type { ApiError } from "../../../09-auth/app/api/api";
 
-
 export type TaskStatus = "all" | "done" | "undone";
 export type SortOption =
   | "created"
@@ -160,7 +159,12 @@ export const checkSession = async (): Promise<boolean> => {
 };
 
 export const getMe = async () => {
-  const { data } = await nextProxyServer.get<User>("/users/me");
+  const { data } = await nextProxyServer.get<User>("/users/me", {
+    headers: {
+      "Cache-Control": "no-cache",
+    },
+  });
+
   console.log("getMe data:", data);
   return data;
 };
@@ -177,4 +181,17 @@ export type UpdateUserRequest = {
 export const updateMe = async (payload: UpdateUserRequest) => {
   const res = await nextProxyServer.patch<User>("/users/me", payload);
   return res.data;
+};
+
+export const updateAvatar = async (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await nextProxyServer.patch("/users/me/avatar", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data;
 };
