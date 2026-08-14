@@ -27,6 +27,7 @@ export interface FetchNotesParams {
   search?: string;
   tag?: "Work" | "Personal" | "Meeting" | "Shopping" | "Todo";
   status?: TaskStatus;
+  priority?: number;
   sortBy?: SortOption;
   page: number;
   perPage: number;
@@ -63,6 +64,7 @@ export async function fetchNotes(
         search: params.search,
         tag: params.tag,
         status: params.status,
+        priority: params.priority,
         sortBy: params.sortBy,
         page: params.page,
         perPage: params.perPage,
