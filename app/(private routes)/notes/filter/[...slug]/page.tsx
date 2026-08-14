@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { fetchNotes, TaskStatus } from "@/lib/api/clientApi";
+import { fetchNotes, TaskStatus, SortOption } from "@/lib/api/clientApi";
 import {
   QueryClient,
   HydrationBoundary,
@@ -12,6 +12,8 @@ type Props = {
   params: Promise<{ slug: string[] }>;
   searchParams: Promise<{
     status?: TaskStatus;
+    priority?: number
+    sortBy?: SortOption;
     search?: string;
     page?: string;
   }>;
@@ -43,7 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const Notes = async ({ params, searchParams }: Props) => {
   const { slug } = await params;
-  const { status, priority, search, page } = await searchParams; // 1. Достаем status из query-параметров
+  const { status, priority, sortBy, search, page } = await searchParams; // 1. Достаем status из query-параметров
 
   const tag =
     slug[0] === "all"
@@ -61,6 +63,7 @@ const Notes = async ({ params, searchParams }: Props) => {
     tag: tag,
     status: status === "all" ? undefined : status,
     priority: priority,
+    sortBy: sortBy || "created",
     search: search || "",
     page: Number(page) || 1,
     perPage: 10,
