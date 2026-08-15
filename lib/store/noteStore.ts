@@ -14,6 +14,7 @@ const initialDraft = {
   tag: 'Todo' as "Work" | "Personal" | "Meeting" | "Shopping" | "Todo" ,
   status: "undone",
   priority: 1,
+  is_completed: false,
 };
 
 
