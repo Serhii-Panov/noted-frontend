@@ -1,8 +1,11 @@
 import type { Note } from "../../types/note";
 import type { User } from "../../types/user";
 import nextProxyServer from "./api";
-import type { ApiError } from "../../../09-auth/app/api/api";
 
+export interface ApiError extends Error {
+  status?: number;
+  message: string;
+}
 export type TaskStatus = "all" | "done" | "undone";
 export type SortOption =
   | "created"
