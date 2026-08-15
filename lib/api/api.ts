@@ -5,7 +5,7 @@ export const api = axios.create({
   withCredentials: true,
 });
 const nextProxyServer = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || '/api',
+  baseURL:'/api',
   withCredentials: true,
 });
 
