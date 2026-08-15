@@ -69,4 +69,14 @@ describe("fetchNotes API client", () => {
       headers: undefined,
     });
   });
+
+  it("throws an error when server returns 500", async () => {
+    const mockGet = jest.mocked(nextProxyServer.get);
+    // Мокаем отклонение промиса (rejected)
+    mockGet.mockRejectedValueOnce(new Error("Server Error"));
+
+    await expect(fetchNotes({ page: 1, perPage: 10 })).rejects.toThrow(
+      "Failed to fetch notes",
+    );
+  });
 });
