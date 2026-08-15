@@ -12,6 +12,8 @@ const initialDraft = {
   title: '',
   content: '',
   tag: 'Todo' as "Work" | "Personal" | "Meeting" | "Shopping" | "Todo" ,
+  status: "undone",
+  priority: 1,
 };
 
 
