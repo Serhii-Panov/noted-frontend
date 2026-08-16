@@ -3,8 +3,9 @@ import axios from 'axios';
 const RENDER_BACKEND_URL = 'https://noted-backend-h249.onrender.com';
 
 // Server-side axios instance for Route Handlers - calls backend directly
+// Backend has global /api prefix, so include it in baseURL
 export const api = axios.create({
-  baseURL: process.env.API_URL || RENDER_BACKEND_URL,
+  baseURL: process.env.API_URL ? `${process.env.API_URL}/api` : `${RENDER_BACKEND_URL}/api`,
   withCredentials: true,
 });
 
