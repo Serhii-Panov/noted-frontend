@@ -7,6 +7,9 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     
+    // Log the exact URL being called for debugging
+    console.log('Fetching backend URL:', `${api.defaults.baseURL}/auth/login`);
+    
     const apiRes = await api.post('/auth/login', body);
 
     const response = NextResponse.json(apiRes.data, { status: apiRes.status });
@@ -49,11 +52,29 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
+      // Detailed error logging for debugging
+      console.error('Backend error response:', {
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        headers: error.response?.headers,
+        config: {
+          url: error.config?.url,
+          baseURL: error.config?.baseURL,
+          method: error.config?.method,
+        },
+      });
       return NextResponse.json(
-        { error: error.message, response: error.response?.data },
+        { 
+          error: error.message, 
+          response: error.response?.data,
+          status: error.response?.status,
+          backendUrl: error.config?.baseURL ? `${error.config.baseURL}${error.config.url}` : 'unknown'
+        },
         { status: error.response?.status || 500 }
       );
     }
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    console.error('Non-axios error:', error);
+    return NextResponse.json({ error: 'Internal Server Error', details: (error as Error).message }, { status: 500 });
   }
 }

@@ -4,8 +4,13 @@ const RENDER_BACKEND_URL = 'https://noted-backend-h249.onrender.com';
 
 // Server-side axios instance for Route Handlers - calls backend directly
 // Backend has global /api prefix, so include it in baseURL
+// Clean the base URL to prevent duplicate /api
+const cleanBaseUrl = (process.env.API_URL || RENDER_BACKEND_URL)
+  .replace(/\/+$/, '')
+  .replace(/\/api$/, '');
+
 export const api = axios.create({
-  baseURL: process.env.API_URL ? `${process.env.API_URL}/api` : `${RENDER_BACKEND_URL}/api`,
+  baseURL: `${cleanBaseUrl}/api`,
   withCredentials: true,
 });
 
