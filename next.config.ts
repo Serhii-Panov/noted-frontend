@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const BACKEND_URL = process.env.API_URL || "https://noted-backend-h249.onrender.com";
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -12,7 +14,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://noted-backend-h249.onrender.com/api/:path*",
+        destination: `${BACKEND_URL}/api/:path*`,
       },
     ];
   },

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { parseCookie } from "cookie"; // В версии cookie 1.0+ используется именно parseCookie
-import { checkServerSession } from "./lib/api/serverApi";
+import { parseCookie } from "cookie";
+import { api } from "./lib/api/api";
 
 const privateRoutes = ["/profile", "/notes"];
 const publicRoutes = ["/sign-in", "/sign-up"];
@@ -23,7 +23,17 @@ export async function proxy(request: NextRequest) {
   if (!accessToken) {
     if (refreshToken) {
       try {
-        const response = await checkServerSession();
+        // Build cookie header from all cookies
+        const cookieHeader = request.cookies
+          .getAll()
+          .map((c) => `${c.name}=${c.value}`)
+          .join('; ');
+
+        const response = await api.get('/auth/session', {
+          headers: {
+            Cookie: cookieHeader,
+          },
+        });
 
         if (response?.headers && response.headers["set-cookie"]) {
           const setCookieHeader = response.headers["set-cookie"];
@@ -39,7 +49,7 @@ export async function proxy(request: NextRequest) {
             : NextResponse.next();
 
           for (const cookieStr of cookieArray) {
-            // Исправлено для cookie v1.0+: parseCookie вместо parse
+            // Parse cookie using cookie library
             const parsed = parseCookie(cookieStr);
 
             if (parsed) {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { api } from "@/lib/api/api";
+import { api } from "../../api";
 import { isAxiosError } from "axios";
 
 export async function GET(req: NextRequest) {
@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ success: false }, { status: 200 });
     }
 
-    const apiRes = await api.get("auth/session", {
+    const apiRes = await api.get("/auth/session", {
       headers: {
         Cookie: cookieHeader,
       },
