@@ -19,7 +19,7 @@ The project features a clean separation of concerns, built with a Next.js fronte
 * **Framework:** [FastAPI](https://fastapi.tiangolo.com/) (Python, Pydantic)
 * **Authentication:** HTTP-only Cookie / Sessions
 * **Deployment:** [Render](https://render.com/)
-
+https://github.com/Serhii-Panov/noted-backend
 ---
 
 ## 🛠️ Key Features & Architecture
